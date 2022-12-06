@@ -18,15 +18,29 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
+  solidity: {
+    version: "0.8.4",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+    },
+  },
   networks: {
     ropsten: {
       url: `https://eth-ropsten.alchemyapi.io/v2/${process.env.ropsten_key}`,
       accounts: [`${process.env.private_key}`]
     },
-    mainnet: {
-      url: `https://mainnet.infura.io/v3/${process.env.mainnet_key}>`, // or any other JSON-RPC provider
+    goerli: {
+      url: `https://eth-goerli.alchemyapi.io/v2/${process.env.goerli_key}`,
       accounts: [`${process.env.private_key}`]
+    },
+    mainnet: {
+      url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.mainnet_key}`, // or any other JSON-RPC provider
+      accounts: [`${process.env.private_key}`],
+      gasPrice: 50000000000,
+      saveDeployments: true,
     }
   },
   etherscan: {
